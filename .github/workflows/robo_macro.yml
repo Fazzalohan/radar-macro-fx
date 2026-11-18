@@ -1,0 +1,33 @@
+name: Atualizar Dados Macro FX
+
+on:
+  schedule:
+    # Roda Seg, Qua e Sex as 11:00 UTC (08:00 Brasilia)
+    - cron: '0 11 * * 1,3,5'
+  workflow_dispatch: # Permite rodar manualmente com 1 clique
+
+permissions:
+  contents: write
+
+jobs:
+  coletar-dados:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Executar robo de coleta BCB e MDIC
+        run: python atualizar_dados.py
+
+      - name: Salvar dados atualizados no painel
+        run: |
+          git config user.name "Robo Macro FX"
+          git config user.email "bot@://github.com"
+          git add dados_macro.json
+          git commit -m "Atualizacao automatica BCB e MDIC" || exit 0
+          git push
