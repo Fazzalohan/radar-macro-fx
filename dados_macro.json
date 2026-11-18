@@ -1,0 +1,20 @@
+{
+  "atualizado_em": "18/11/2026 04:19 UTC",
+  "ptax": 5.78,
+  "ptax_data": "16/11/2026",
+  "selic": 13.75,
+  "fluxo_bcb_recente": [],
+  "setores_acumulado_ano": {
+    "Soja (Complexo)": 54.8,
+    "Petroleo Bruto": 41.2,
+    "Derivados Export": 11.4,
+    "Minerio de Ferro": 24.0,
+    "Carne Bovina": 10.5,
+    "Cafe": 11.9,
+    "Celulose": 9.09,
+    "Milho": 5.7,
+    "Acucar": 11.2,
+    "Frango": 8.8,
+    "Derivados Import": 21.8
+  }
+}
