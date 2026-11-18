@@ -1,167 +1,320 @@
-<!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Fluxo Cambial Sazonal | Dark Edition Live</title>
-  <script src="https://tailwindcss.com"></script>
-  <script src="https://jsdelivr.net"></script>
-  <style>
-    @import url('https://googleapis.com');
-    body {
-      background-color: #0b0e14;
-      background-image: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.06) 0%, transparent 45%),
-                        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 45%);
-      color: #e2e8f0;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-    .glass-card {
-      background: linear-gradient(145deg, rgba(24, 30, 44, 0.88), rgba(14, 18, 27, 0.95));
-      border: 1px solid rgba(148, 163, 184, 0.14);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(14px);
-    }
-    .pulse-alert { animation: pulse-glow 2.2s infinite; }
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 12px rgba(245, 158, 11, 0.3); }
-      50% { box-shadow: 0 0 24px rgba(245, 158, 11, 0.85); }
-    }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0b0e14; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-  </style>
-</head>
-<body class="pb-16">
+Curva de Fluxo Cambial Líquido & Canais (Nov/26 – Dez/27)
+Canal Comercial (77% MDIC) vs. Saídas Financeiras e Saldo Líquido (US$ Bilhões)
 
-  <!-- Top Header -->
-  <header class="sticky top-0 z-50 glass-card border-b border-slate-800/80 px-4 py-3">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-3">
-        <span class="relative flex h-3 w-3">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-        </span>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-sm sm:text-base font-extrabold tracking-wide uppercase text-white">Fluxo Cambial Sazonal do Dólar</h1>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30">DARK EDITION LIVE</span>
-          </div>
-          <p class="text-[11px] text-slate-400">Nov/2026 a Dez/2027 · Fluxos Setoriais, Cenários, Carrego e Mentalidade por Perfil</p>
-        </div>
-      </div>
-      <div class="text-right">
-        <span id="bot-badge" class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-950/90 text-emerald-400 border border-emerald-700/50">
-          BCB + MDIC: Online
-        </span>
-        <p id="last-sync" class="text-[10px] text-slate-400 mt-0.5">Base: 16/11/2026</p>
-      </div>
-    </div>
-  </header>
+Projeção Sazonal
 
-  <main class="max-w-7xl mx-auto px-3 sm:px-5 pt-5 space-y-5">
 
-    <!-- 1. KPI Cards (Espelho da Página 1 do PDF) -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-      <!-- Spot -->
-      <div class="glass-card rounded-2xl p-4 relative">
-        <div class="flex justify-between items-center">
-          <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">USD/BRL Spot</span>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-sky-400">Interativo</span>
-        </div>
-        <div id="spot-val" class="mt-1 text-3xl font-extrabold text-white">R$ 5,78</div>
-        <input type="range" id="spot-slider" min="5.00" max="6.35" step="0.01" value="5.78"
-               class="w-full accent-sky-400 h-1.5 bg-slate-700 rounded-lg cursor-pointer mt-2.5" />
-        <p class="text-[11px] text-slate-400 mt-1">Focus: R$ 5,34 (fim-26) · R$ 5,40 (fim-27)</p>
-      </div>
+Composição Exportadora (Pico Mar–Mai)
+Total estimado: US$ 74 bi (Soja domina 45% da safra anual)
 
-      <!-- Fluxo 2026 -->
-      <div class="glass-card rounded-2xl p-4">
-        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Fluxo Cambial 2026 (Até Out)</span>
-        <div class="mt-1 text-3xl font-extrabold text-emerald-400">+US$ 28,7 bi</div>
-        <p class="text-[11px] text-slate-300 mt-2">Comercial <span class="text-emerald-400 font-semibold">+55,0 bi</span> · Financeiro <span class="text-rose-400 font-semibold">−26,2 bi</span></p>
-        <p class="text-[10px] text-slate-500 mt-0.5">Estimativa fechamento 2026: ≈ +US$ 16 bi</p>
-      </div>
 
-      <!-- Saldo 2027 -->
-      <div class="glass-card rounded-2xl p-4">
-        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Saldo Líquido 2027</span>
-        <div id="net-2027" class="mt-1 text-3xl font-extrabold text-sky-400">≈ US$ 0,0 bi</div>
-        <p class="text-[11px] text-slate-300 mt-2">Faixa base: <span class="text-white font-semibold">−15 a +15 bi</span> (Colchão zerado)</p>
-        <p id="carrego-info" class="text-[10px] text-sky-400 mt-0.5">Trava 6M c/ Carrego (Selic 13,75%): R$ 6,05</p>
-      </div>
+Cota China carne (1,128 Mt) esgota até Abr/27
+Impacto dos Choques no Saldo de 2027 (US$ Bilhões)
+Sensibilidade sobre o saldo base (≈ 0) por fator de risco
 
-      <!-- Zona Atual -->
-      <div id="zone-card" class="glass-card rounded-2xl p-4 border-amber-500/50 pulse-alert">
-        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Zona de Referência</span>
-        <div id="zone-badge" class="mt-1 text-2xl font-extrabold text-amber-400">Z3 → Z4 · ALERTA</div>
-        <p id="zone-desc" class="text-[11px] text-slate-200 mt-2">Prêmio +7,0% vs Focus (5,40)</p>
-        <p class="text-[10px] text-amber-400/90 mt-0.5">Na borda do gatilho agro (R$ 5,80)</p>
-      </div>
-    </section>
 
-    <!-- 2. Régua Visual de Zonas + Custo de Carrego (Página 6 do PDF) -->
-    <section class="glass-card rounded-2xl p-4 sm:p-5">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
-        <div>
-          <h2 class="text-sm font-bold text-white uppercase tracking-wide">Régua de Zonas de Referência & Custo de Carrego</h2>
-          <p class="text-xs text-slate-400">Âncora Focus (R$ 5,40) vs. Preço Spot e Dólar Futuro de 6 meses (Diferencial de Juros)</p>
-        </div>
-        <div class="flex flex-wrap gap-3 text-[11px]">
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span> Focus (5,40)</span>
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Spot Atual</span>
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Futuro 6M (Carrego)</span>
-        </div>
-      </div>
+Fluxo Cambial Realizado (Banco Central)
+Histórico oficial contratado no Brasil (US$ Bilhões)
 
-      <!-- Barra de Zonas -->
-      <div class="relative pt-7 pb-6">
-        <div class="h-5 w-full rounded-full overflow-hidden flex text-[10px] font-bold text-slate-950 shadow-inner">
-          <div style="width: 18.5%" class="bg-emerald-500 flex items-center justify-center">Z1 (&lt;5,25)</div>
-          <div style="width: 26%" class="bg-sky-400 flex items-center justify-center">Z2 Neutra (5,25–5,60)</div>
-          <div style="width: 15%" class="bg-amber-400 flex items-center justify-center">Z3 (5,60–5,80)</div>
-          <div style="width: 15%" class="bg-orange-500 flex items-center justify-center">Z4 (5,80–6,00)</div>
-          <div style="width: 25.5%" class="bg-rose-500 text-white flex items-center justify-center">Z5 Estresse (&gt;6,00)</div>
-        </div>
+BCB SGS
 
-        <!-- Marcador Focus 5.40 -->
-        <div style="left: 29.6%;" class="absolute top-1 -translate-x-1/2 flex flex-col items-center">
-          <span class="text-[10px] font-bold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-600">Focus 5,40</span>
-          <div class="w-0.5 h-7 bg-slate-300"></div>
-        </div>
 
-        <!-- Marcador Spot Dinâmico -->
-        <div id="marker-spot" style="left: 57.8%;" class="absolute top-1 -translate-x-1/2 flex flex-col items-center transition-all duration-150">
-          <span id="marker-spot-lbl" class="text-[10px] font-extrabold text-slate-950 bg-amber-400 px-2 py-0.5 rounded shadow">Spot 5,78</span>
-          <div class="w-0.5 h-7 bg-amber-400"></div>
-        </div>
+Vendas Externas por Setor (MDIC / ComexStat)
+Acumulado no ano (US$ Bilhões FOB) — atualizado automaticamente pelo robô
 
-        <!-- Marcador Futuro 6M Dinâmico -->
-        <div id="marker-fwd" style="left: 78%;" class="absolute bottom-0 -translate-x-1/2 flex flex-col items-center transition-all duration-150">
-          <div class="w-0.5 h-6 bg-sky-400"></div>
-          <span id="marker-fwd-lbl" class="text-[10px] font-bold text-sky-300 bg-sky-950 px-2 py-0.5 rounded border border-sky-500/50">Trava 6M: 6,05</span>
-        </div>
-      </div>
-    </section>
 
-    <!-- 3. Simulador de Cenários Macro (Página 5 do PDF) -->
-    <section class="glass-card rounded-2xl p-4 sm:p-5">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-        <div>
-          <h2 class="text-sm font-bold text-white uppercase tracking-wide">Simulador de Choques & Sensibilidade (2027)</h2>
-          <p class="text-xs text-slate-400">Ative os choques estruturais do relatório para observar o impacto no saldo líquido</p>
-        </div>
-        <button onclick="resetSim()" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition self-start">
-          Restaurar Cenário Base
-        </button>
-      </div>
+Balança Derivados (Exp − Imp): −US$ 10,4 bi
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3">
-          <label class="text-[11px] font-semibold text-slate-400 block mb-1.5">Trajetória Petróleo Brent</label>
-          <select id="brent-sel" onchange="updateSim()" class="w-full bg-slate-800 text-white text-xs rounded-lg p-2 border border-slate-700 focus:outline-none focus:border-sky-400">
-            <option value="0">Base: US$ 80 (Neutro)</option>
-            <option value="-6.4">Queda: US$ 65 (−US$ 6,4 bi)</option>
-            <option value="7.6">Alta: US$ 100 (+US$ 7,6 bi)</option>
-          </select>
-        </div>
 
+Mentalidade & Playbook por Perfil de Mercado
+Selecione o perfil para ver a psicologia de mercado e a diretriz exata na zona selecionada
+🌾 Exportador / Produtor
+
+
+🚢 Importador (Passivo)
+
+
+📈 Investidor / Tendência
+
+Calendário Sazonal & Posicionamento (Nov/26 – Dez/27)
+Guia tático por janela para Exportadores, Importadores e Investidores
+
+Janela	Saldo	🌾 Exportador	🚢 Importador	📈 Investidor
+Nov–Dez/26	−12,2 bi	Executar travas da safra 26/27 em Z3/Z4 antes do pico de remessas de dezembro.	Evitar comprar no pânico de dezembro; rolar vencimentos para 1º tri/27.	Realizar ganhos na compra de dólar; preparar venda tática no estresse.
+Jan–Fev/27	−1,1 bi	Travar nova parcela conforme colheita precoce de MT e embarques de carne (cota China).	Iniciar compras graduais se câmbio recuar para Z1–Z2.	Acompanhar transição fiscal e diferencial de juros (Selic vs Fed).
+Mar–Mai/27	+7,1 bi	Pico físico da soja (45% do ano). Não travar por pressa em Z1–Z2.	Melhor janela do ano para acumular caixa e fechar câmbio futuro.	Acumular posições compradas em dólar/ativos globais se spot testar Z1.
+Jun–Ago/27	+5,1 bi	Milho, café e açúcar; iniciar travas da safra 27/28 se dólar subir a Z3+.	Janela secundária de acumulação (atenção à saída de fertilizantes).	Monitorar deslocamento de soja retida por produtores endividados.
+Set–Out/27	+4,2 bi	Ampliar travas 27/28 aproveitando pico do café e fluxo de petróleo.	Antecipar necessidades de fim de ano antes da virada sazonal de novembro.	Montar posição comprada em USD mirando o déficit de remessas de nov–dez.
+Nov–Dez/27	−15,7 bi	Repetir ciclo: travar antes da janela pesada de remessas de lucros.	Operar estritamente o necessário (hand-to-mouth); evitar spot em Z4/Z5.	Capturar prêmio de estresse na ponta vendedora de dólar caso supere R$ 6,00.
+
+const periods = ['Nov-Dez/26', 'Jan-Fev/27', 'Mar-Mai/27', 'Jun-Ago/27', 'Set-Out/27', 'Nov-Dez/27'];
+const baseCom = [9.8, 5.9, 18.1, 16.1, 12.2, 9.3];
+const baseFin = [-22.0, -7.0, -11.0, -11.0, -8.0, -25.0];
+let selicRate = 13.75;
+let currentProfile = 'exportador';
+let projChart, sectorDoughnut, impactChart, bcbRealChart;
+async function loadMacroData() {
+let data = {
+atualizado_em: "16/11/2026 (Base Relatório)",
+ptax: 5.78,
+selic: 13.75,
+fluxo_bcb_recente: [
+{ mes: "06/2026", comercial: 6.2, financeiro: -4.1, liquido: 2.1 },
+{ mes: "07/2026", comercial: 5.8, financeiro: -3.5, liquido: 2.3 },
+{ mes: "08/2026", comercial: 4.9, financeiro: -3.8, liquido: 1.1 },
+{ mes: "09/2026", comercial: 4.1, financeiro: -9.2, liquido: -5.1 },
+{ mes: "10/2026", comercial: 9.4, financeiro: 8.8, liquido: 18.2 }
+],
+setores_acumulado_ano: {
+"Soja (Complexo)": 54.8,
+"Petroleo Bruto": 41.2,
+"Minerio de Ferro": 24.0,
+"Cafe": 11.9,
+"Acucar": 11.2,
+"Carne Bovina": 10.5,
+"Celulose": 9.09,
+"Frango": 8.8,
+"Milho": 5.7,
+"Derivados Export": 11.4,
+"Derivados Import": 21.8
+}
+};
+try {
+const res = await fetch('./dados_macro.json?t=' + Date.now());
+if (res.ok) {
+const json = await res.json();
+data = { ...data, ...json };
+}
+} catch (e) {
+console.log("Fallback ativo");
+}
+selicRate = Number(data.selic) || 13.75;
+const ptaxVal = Number(data.ptax) || 5.78;
+document.getElementById('last-sync').innerText = 'Atualizado: ' + data.atualizado_em;
+document.getElementById('spot-slider').value = ptaxVal.toFixed(2);
+updateSpot(ptaxVal);
+renderSectors(data.setores_acumulado_ano);
+renderBCBRealChart(data.fluxo_bcb_recente);
+}
+function renderSectors(setores) {
+const grid = document.getElementById('sectors-grid');
+const saldoDeriv = (setores["Derivados Export"] || 0) - (setores["Derivados Import"] || 0);
+document.getElementById('derivados-alert').innerText =
+Balança Derivados (Exp − Imp): ${saldoDeriv >= 0 ? '+' : ''}US$ ${saldoDeriv.toFixed(1).replace('.', ',')} bi;
+const list = [
+{ name: "Soja (Grão/Farelo/Óleo)", val: setores["Soja (Complexo)"], color: "text-emerald-400" },
+{ name: "Petróleo Bruto", val: setores["Petroleo Bruto"], color: "text-sky-400" },
+{ name: "Minério de Ferro", val: setores["Minerio de Ferro"], color: "text-amber-400" },
+{ name: "Café", val: setores["Cafe"], color: "text-purple-400" },
+{ name: "Açúcar", val: setores["Acucar"], color: "text-teal-400" },
+{ name: "Carne Bovina", val: setores["Carne Bovina"], color: "text-rose-400" },
+{ name: "Celulose", val: setores["Celulose"], color: "text-indigo-400" },
+{ name: "Carne de Frango", val: setores["Frango"], color: "text-orange-400" },
+{ name: "Milho", val: setores["Milho"], color: "text-lime-400" },
+{ name: "Derivados (Exportação)", val: setores["Derivados Export"], color: "text-slate-300" }
+];
+grid.innerHTML = list.map(item => <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3"> <span class="text-[11px] text-slate-400 block truncate">${item.name}</span> <span class="text-base font-extrabold ${item.color} mt-0.5 block">US$ ${(item.val || 0).toFixed(2).replace('.', ',')} bi</span> </div>).join('');
+}
+function updateSpot(val) {
+const spot = parseFloat(val);
+document.getElementById('spot-val').innerText = 'R$ ' + spot.toFixed(2).replace('.', ',');
+const spread = (selicRate - 4.25) / 100;
+const fwd6m = spot * Math.pow(1 + spread, 0.5);
+const fwdStr = 'R$ ' + fwd6m.toFixed(2).replace('.', ',');
+document.getElementById('carrego-info').innerText = Trava 6M c/ Carrego (Selic ${selicRate.toFixed(2).replace('.', ',')}%): ${fwdStr};
+// Atualizar marcadores na régua (escala visual de 5.00 a 6.35)
+const pctSpot = Math.min(96, Math.max(4, ((spot - 5.00) / 1.35) * 100));
+const pctFwd = Math.min(96, Math.max(4, ((fwd6m - 5.00) / 1.35) * 100));
+document.getElementById('marker-spot').style.left = pctSpot + '%';
+document.getElementById('marker-spot-lbl').innerText = 'Spot ' + spot.toFixed(2).replace('.', ',');
+document.getElementById('marker-fwd').style.left = pctFwd + '%';
+document.getElementById('marker-fwd-lbl').innerText = 'Trava 6M: ' + fwd6m.toFixed(2).replace('.', ',');
+const premio = ((spot / 5.40) - 1) * 100;
+const badge = document.getElementById('zone-badge');
+const card = document.getElementById('zone-card');
+let z = 'Z3';
+if (spot < 5.25) { z = 'Z1'; badge.innerText = 'Z1 · ACUMULAÇÃO'; badge.className = 'mt-1 text-2xl font-extrabold text-emerald-400'; card.style.borderColor = 'rgba(52,211,153,0.5)'; }
+else if (spot <= 5.60) { z = 'Z2'; badge.innerText = 'Z2 · NEUTRA'; badge.className = 'mt-1 text-2xl font-extrabold text-sky-400'; card.style.borderColor = 'rgba(56,189,248,0.5)'; }
+else if (spot <= 5.80) { z = 'Z3'; badge.innerText = 'Z3 · ALERTA'; badge.className = 'mt-1 text-2xl font-extrabold text-amber-400'; card.style.borderColor = 'rgba(245,158,11,0.6)'; }
+else if (spot <= 6.00) { z = 'Z4'; badge.innerText = 'Z4 · GATILHO'; badge.className = 'mt-1 text-2xl font-extrabold text-orange-500'; card.style.borderColor = 'rgba(249,115,22,0.7)'; }
+else { z = 'Z5'; badge.innerText = 'Z5 · ESTRESSE'; badge.className = 'mt-1 text-2xl font-extrabold text-rose-500'; card.style.borderColor = 'rgba(244,63,94,0.8)'; }
+document.getElementById('zone-desc').innerText = Prêmio ${premio >= 0 ? '+' : ''}${premio.toFixed(1)}% vs Focus (5,40);
+renderPlaybook(z, fwdStr);
+}
+function renderPlaybook(z, fwdStr) {
+const profiles = {
+exportador: {
+title: 'Mentalidade do Exportador / Produtor Rural',
+mindset: 'Busca travar margem operacional aproveitando as janelas de saída financeira (Nov–Dez). Produtores alavancados operam via Barter/CPR com tradings em vez de ACC.',
+act: {
+Z1: 'Segurar travas (0–15%). Dólar descontado frente ao Focus; aguardar pressão sazonal de remessas.',
+Z2: 'Hedge de rotina (20–30%) apenas para cobrir despesas imediatas em reais.',
+Z3: Travar 30–50% em tranches antes das remessas de dezembro. Com carrego de juros, trava 6M já paga ~${fwdStr}.,
+Z4: 'Gatilho principal: travar 50–70% da safra 26/27 via NDF ou Zero-Cost Collar.',
+Z5: 'Travar saldo restante (até 85%) usando opções/colar para manter participação em eventual overshoot.'
+}
+},
+importador: {
+title: 'Mentalidade do Importador (Passivo Operacional)',
+mindset: 'Evita comprar no topo de pânico em dezembro. Usa o forte fluxo comercial da safra de soja (Mar–Mai) para recompor estoques e caixa em dólar.',
+act: {
+Z1: 'Janela ouro: antecipar compras de câmbio futuro e fechar contratos de fornecimento.',
+Z2: 'Compras programadas semanais (preço médio) mantendo posição neutra.',
+Z3: 'Reduzir compras à vista ao estritamente operacional; postergar pagamentos para a janela de Mar–Mai.',
+Z4: 'Evitar compra de dólar físico no spot; contratar trava de teto (Call Spread) como seguro.',
+Z5: 'Operar somente necessidade diária (hand-to-mouth) e repassar variação cambial na tabela.'
+}
+},
+investidor: {
+title: 'Mentalidade do Investidor & Operador de Tendência',
+mindset: 'Como o colchão comercial de 2027 zera (saldo líquido ≈ 0), o câmbio fica hipersensível ao canal financeiro. O investidor surfa as assimetrias do calendário.',
+act: {
+Z1: 'Acumular posição comprada em Dólar / ativos globais mirando a pressão sazonal de fim de ano.',
+Z2: 'Posição neutra; capturar juros reais elevados no Brasil enquanto aguarda gatilhos.',
+Z3: 'Realizar lucro parcial nas compras de spot; preparar venda tática após o pico de remessas de dezembro.',
+Z4: 'Montar posições vendidas em dólar (ou compradas em ativos locais) mirando a entrada de soja em Jan–Mar/27.',
+Z5: 'Prêmio de estresse (>11% sobre Focus): oportunidade contrária para comprar ativos brasileiros descontados.'
+}
+}
+};
+const p = profiles[currentProfile];
+document.getElementById('profile-box').innerHTML = <div class="flex justify-between items-center border-b border-slate-800 pb-2"> <h3 class="text-sm font-bold text-sky-400">${p.title}</h3> <span class="text-[11px] font-bold px-2.5 py-0.5 rounded bg-slate-800 text-amber-400">Diretriz ${z}</span> </div> <p class="text-xs text-slate-300 leading-relaxed"><strong class="text-white">Leitura Comportamental:</strong> ${p.mindset}</p> <div class="p-3 rounded-xl bg-sky-950/35 border border-sky-500/30"> <span class="text-[10px] uppercase tracking-wider text-sky-400 font-bold block mb-1">Plano de Ação Recomendado</span> <p class="text-xs text-white font-medium">${p.act[z]}</p> </div>;
+}
+function setProfile(p) {
+currentProfile = p;
+document.querySelectorAll('.p-tab').forEach(b => b.className = 'p-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800/60 text-slate-400');
+document.getElementById('tab-' + p).className = 'p-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-sky-500/20 text-sky-400 border border-sky-500/40';
+updateSpot(document.getElementById('spot-slider').value);
+}
+function updateSim() {
+const brent = parseFloat(document.getElementById('brent-sel').value);
+const elnino = document.getElementById('chk-elnino').checked;
+const debt = document.getElementById('chk-debt').checked;
+const fiscal = document.getElementById('chk-fiscal').checked;
+let com = [...baseCom];
+let fin = [...baseFin];
+if (brent !== 0) {
+const step = brent / 5;
+for (let i = 1; i <= 5; i++) com[i] += step;
+}
+if (elnino) { com[2] -= 5.0; com[3] -= 2.0; }
+if (debt) { com[2] -= 3.5; com[3] += 3.5; }
+if (fiscal) { fin[1] -= 2.0; fin[2] -= 1.5; fin[3] -= 1.5; fin[5] -= 3.0; }
+const net = com.map((c, i) => +(c + fin[i]).toFixed(1));
+const total27 = net.slice(1).reduce((a, b) => a + b, 0);
+const el27 = document.getElementById('net-2027');
+el27.innerText = ${total27 >= 0 ? '+' : ''}US$ ${total27.toFixed(1).replace('.', ',')} bi;
+el27.className = mt-1 text-3xl font-extrabold ${total27 >= 0 ? 'text-emerald-400' : 'text-rose-400'};
+if (projChart) {
+projChart.data.datasets[0].data = net;
+projChart.data.datasets[1].data = com.map(v => +v.toFixed(1));
+projChart.data.datasets[2].data = fin.map(v => +v.toFixed(1));
+projChart.update();
+}
+}
+function resetSim() {
+document.getElementById('brent-sel').value = '0';
+document.getElementById('chk-elnino').checked = false;
+document.getElementById('chk-debt').checked = false;
+document.getElementById('chk-fiscal').checked = false;
+updateSim();
+}
+function initAllCharts() {
+// 1. Gráfico Curva + Barras Translúcidas
+const ctxProj = document.getElementById('projChart').getContext('2d');
+const net = baseCom.map((c, i) => +(c + baseFin[i]).toFixed(1));
+projChart = new Chart(ctxProj, {
+type: 'bar',
+data: {
+labels: periods,
+datasets: [
+{ type: 'line', label: 'Saldo Líquido', data: net, borderColor: '#38bdf8', backgroundColor: 'rgba(56,189,248,0.18)', borderWidth: 3, pointBackgroundColor: '#fff', pointRadius: 4, fill: true, tension: 0.35 },
+{ label: 'Canal Comercial', data: baseCom, backgroundColor: 'rgba(16,185,129,0.65)', borderRadius: 6 },
+{ label: 'Canal Financeiro', data: baseFin, backgroundColor: 'rgba(244,63,94,0.65)', borderRadius: 6 }
+]
+},
+options: {
+responsive: true, maintainAspectRatio: false,
+plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } },
+scales: {
+x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } }
+}
+}
+});
+// 2. Gráfico Rosca Setorial (Página 3 do PDF)
+const ctxSec = document.getElementById('sectorDoughnut').getContext('2d');
+sectorDoughnut = new Chart(ctxSec, {
+type: 'doughnut',
+data: {
+labels: ['Soja (Complexo)', 'Petróleo Bruto', 'Minério de Ferro', 'Café/Açúcar/Celulose/Carnes'],
+datasets: [{
+data: [31.2, 16.5, 6.6, 19.7],
+backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(56, 189, 248, 0.85)', 'rgba(245, 158, 0.85)', 'rgba(139, 92, 246, 0.85)'],
+borderColor: '#0f172a',
+borderWidth: 3
+}]
+},
+options: {
+responsive: true, maintainAspectRatio: false, cutout: '66%',
+plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 10 }, boxWidth: 10 } } }
+}
+});
+// 3. Gráfico Sensibilidade / Impacto (Página 5 do PDF)
+const ctxImp = document.getElementById('impactChart').getContext('2d');
+impactChart = new Chart(ctxImp, {
+type: 'bar',
+data: {
+labels: ['Brent US$ 100', 'Endividados (Timing)', 'Brent US$ 65', 'El Niño (MT/GO)', 'El Niño + Brent 65'],
+datasets: [{
+label: 'Variação no Saldo 2027 (US$ bi)',
+data: [7.6, 0.0, -6.4, -7.0, -13.4],
+backgroundColor: [
+'rgba(16,185,129,0.75)',
+'rgba(245,158,11,0.75)',
+'rgba(244,63,94,0.65)',
+'rgba(244,63,94,0.80)',
+'rgba(225,29,72,0.95)'
+],
+borderRadius: 6
+}]
+},
+options: {
+indexAxis: 'y',
+responsive: true, maintainAspectRatio: false,
+plugins: { legend: { display: false } },
+scales: {
+x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+y: { ticks: { color: '#e2e8f0', font: { size: 11 } }, grid: { display: false } }
+}
+}
+});
+}
+function renderBCBRealChart(rows) {
+const ctx = document.getElementById('bcbRealChart').getContext('2d');
+if (bcbRealChart) bcbRealChart.destroy();
+bcbRealChart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: rows.map(r => r.mes),
+datasets: [
+{ type: 'line', label: 'Saldo Líquido', data: rows.map(r => r.liquido), borderColor: '#f59e0b', borderWidth: 2.5, pointBackgroundColor: '#fff', tension: 0.3 },
+{ label: 'Comercial', data: rows.map(r => r.comercial), backgroundColor: 'rgba(16,185,129,0.7)', borderRadius: 5 },
+{ label: 'Financeiro', data: rows.map(r => r.financeiro), backgroundColor: 'rgba(244,63,94,0.7)', borderRadius: 5 }
+]
+},
+options: {
+responsive: true, maintainAspectRatio: false,
+plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } },
+scales: {
+x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } }
+}
+}
+});
+}
+document.getElementById('spot-slider').addEventListener('input', e => updateSpot(e.target.value));
+window.onload = () => {
+initAllCharts();
+loadMacroData();
+};
